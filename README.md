@@ -4,7 +4,6 @@ Copyright © 2014 MitoTool & DomeTree Team
 
 Author: Long Fan (mitotool@gmail.com)
 
-
 ===================================
 ##Brief introduction
 
@@ -53,9 +52,9 @@ iii) `python mitotoolpy-seq.py -h` , which displays help document.
 
 Notes:
 
-(1) Input file would be a single fasta file, which could store single record or multiple records.
+1. Input file would be a single fasta file, which could store single record or multiple records.
 
-(2) Output file would be a tab-delimited text file with five columns:
+2. Output file would be a tab-delimited text file with five columns:
 
 * Column 1)  Sample name
 
@@ -90,7 +89,7 @@ iii) `python mitotoolpy-var.py -h` , which displays help document.
 
 Notes:
 
-(1) Input file should be a tab-delimited text file with two or three columns:
+1. Input file should be a tab-delimited text file with two or three columns:
 
 * Column 1)  Sample name
 
@@ -98,7 +97,7 @@ Notes:
 
 * Column 3 (optional))  Candidate haplogroup(s) claimed by user. Multiple haplogroups seperated by comma, colon or semicolon could be given together.
 
-(2) Output file would be a tab-delimited text file with five columns:
+2. Output file would be a tab-delimited text file with five columns:
 
 * Column 1)  Sample name
 
