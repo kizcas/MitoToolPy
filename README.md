@@ -2,7 +2,7 @@ MitoToolPy
 
 Copyright © 2014 MitoTool & DomeTree Team 
 
-Author: Long Fan (fan.long@mail.kiz.ac.cn)
+Author: Long Fan (mitotool@gmail.com)
 
 
 ===================================
