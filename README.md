@@ -28,7 +28,7 @@ MitoToolPy requires the preinstallation of Python and Biopython. Meanwhile, Clul
 
 
 ===================================
-##Manual
+##Usage
 
 **(1) MitoToolPy-Seq (i.e., mitotoolpy-seq.py)**
 
