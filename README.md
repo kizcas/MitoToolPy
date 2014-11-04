@@ -35,7 +35,7 @@ MitoToolPy requires the preinstallation of Python and Biopython. Meanwhile, Clul
 
 This script is used for classifying haplogroup according to input sequence(s), outputting variants scored relative to the reference sequences, listing potential missing variants and private variants.
 
-Usage: `python mitotoolpy-seq.py -s [species] -r [region] -i [input] -o [output]`
+i) `python mitotoolpy-seq.py -s [species] -r [region] -i [input] -o [output]`
 
 where
 
@@ -47,9 +47,9 @@ where
 
 **[output]** = output file or 'stdout'; Default: 'stdout' (i.e., the interface of command line prompt).
 
-Usage: `python mitotoolpy-seq.py -v` , which displays current version number.
+ii) `python mitotoolpy-seq.py -v` , which displays current version number.
 
-Usage: `python mitotoolpy-seq.py -h` , which displays help document.
+iii) `python mitotoolpy-seq.py -h` , which displays help document.
 
 Notes:
 
@@ -72,7 +72,7 @@ Notes:
 
 This script is used for classifying haplogroup according to input variants, listing potential missing variants and private variants. Given candidate haplogroup(s) is/are provided by users, it could also detect missing variants of claimed haplogroup.
 
-Usage: `python mitotoolpy-var.py -s [species] -r [region] -i [input] -o [output]`
+i) `python mitotoolpy-var.py -s [species] -r [region] -i [input] -o [output]`
 
 where
 
@@ -84,9 +84,9 @@ where
 
 **[output]** = output file or 'stdout'; Default: 'stdout' (i.e., the interface of command line prompt).
 
-`python mitotoolpy-var.py -v` , which displays current version number.
+ii) `python mitotoolpy-var.py -v` , which displays current version number.
 
-`python mitotoolpy-var.py -h` , which displays help document.
+iii) `python mitotoolpy-var.py -h` , which displays help document.
 
 Notes:
 
