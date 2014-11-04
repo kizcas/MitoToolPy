@@ -39,7 +39,7 @@ The brief version of the following usage instructions can be obtained by enterin
 
 Usage: `python mitotoolpy-seq.py -s [species] -r [region] -i [input] -o [output]`
 
-where
+where<br />
 
 **[species]** = an animal selected from 'cattle', 'chicken', 'dog', 'horse', 'goat', 'pig', 'sheep' and 'yak'.
 
