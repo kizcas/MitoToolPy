@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <meta name="keywords" content="haplogroup, domestic animal, mitochondrion, mtDNA">
+    <title>MitoToolPy</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="MitoToolPy designed for data analysis of mtDNAs of domestic animals including 
+	cattle, chicken, dog, horse, goat, pig, sheep and yak">
+  </head>
+  <body>
+    <h1>MitoToolPy</h1>
+    <p><font size="4">Copyright &copy; 2014 MitoTool &amp; DomeTree Team <br>
+    	Author: Long Fan (<a href="mailto:fan.long@mail.kiz.ac.cn">fan.long@mail.kiz.ac.cn</a>)</font><br><br>
+        This page was last updated on <font size="4">26</font>
+        <font size="4"> Oct</font> 2014</font></p>
+    <h2 id="contents">Contents</h2>
+<h3><a href="#intro">Introduction</a></h3>
+    <h3>MitoToolPy-Seq</h3>
+    <ul>
+      <li>
+        <div><font size="4"><a href="#seq">mitotoolpy-seq.py</a> -
+            classify haplogroup according to mtDNA sequence.</font></div>
+      </li>
+    </ul>
+    <h3>MitoToolPy-Var</h3>
+    <ul>
+      <li>
+        <div><a href="#var"><font size="4">mitotoolpy-var.py</font></a><font
+            size="4"> - classify haplogroup according to the variants of mtDNA sequence.</font></div>
+      </li>
+      <li>
+        <div><a href="#var"><font size="4">mitotoolpy-var.py</font></a><font
+            size="4"> - scan possible errors with the help of speculated haplogroups.</font></div>
+      </li>
+    </ul>
+
+    <h3><a href="#download">Download</a></h3>
+    
+<hr>
+    <p> </p>
+    <h2 id="intro">Introduction</h2>
+    <p><font size="4"> MitoToolPy written in python and
+        running on various operation systems (e.g. Windows, Linux, Mac), is designed for data analysis
+    	of mitochondrial DNA of eight domestic animals, including cattle, 
+        chicken, dog, horse, goat, pig, sheep and yak. It utilizes 
+        dometree (<a href="http://www.dometree.org" target="_blank">www.dometree.org</a>) as the reference, and its analysis 
+        for mtDNA sequences include (1) outputting variants scored relative 
+        to the reference sequences; (2) classifying haplogroup status (haplogrouping);
+         and (3) checking potential errors. MitoToolPy can also handle partial 
+         mtDNA genome (e.g. control region) sequences and can serve as a convenient 
+"barcoding tool" for strains or breeds of domestic animals.</font> </p>
+    <p><font size="4">The tool is licensed under GPLv3. </font>
+    </p>
+    <p> </p>
+    <p><a href="#contents"><font size="4">back to contents</font> </a></p>
+<hr>
+    <h2 id="seq">mitotoolpy-seq.py</h2>
+    <h3>Description:</h3>
+    <p><font size="4">This script is used for classifying haplogroup according to input sequence(s), outputting variants scored relative 
+        to the reference sequences, listing potential missing variants and private variants. 
+</font> </p>
+    <h3>Usage:</h3>
+    <p><font size="4"><font><font>The brief version of the following usage instructions can
+            be obtained by entering "</font><font face="Courier">python
+            mitotoolpy-seq.py -h</font></font></font>" <font size="4">at
+</font></p>
+    <p><font face="Times New Roman" size="3"><font face="Courier"
+          size="4"> usage: python mitotoolpy-seq.py -s [species] -r [region] -i [input] -o [output] </font></font></p>
+  <p><font face="Times New Roman" size="3"><font face="Courier"
+          size="4">where<br>
+        &nbsp; [species] = an animal selected from 'cattle', 'chicken', 'dog', 'horse', 'goat', 'pig', 'sheep' and 'yak'.<br>
+          &nbsp; [region] = a region selected from 'dloop', 'nondloop', 'whole' and '[begin_position]:[end_position]'; Default: 'whole'.<br>
+          &nbsp; [input] = input fasta file.<br>
+&nbsp; [output] = output file or 'stdout'; Default: 'stdout' (i.e., the interface of command line prompt)</font></font>.</p>
+    <p><font face="Times New Roman" size="3"><font face="Courier"
+          size="4"> usage: python mitotoolpy-seq.py -v , which displays current version number.</font></font></p>
+    <p><font face="Times New Roman" size="3"><font face="Courier"
+          size="4"> usage: python mitotoolpy-seq.py -h , which displays help document.</font></font></p>
+    <h3>Notes: </h3>
+    <p><font face="Times New Roman" size="3"><font face="Courier"
+          size="4">(1) Input file would be a single fasta file, which could store single record or multiple records.</font></font></p>
+<p><font face="Times New Roman" size="3"><font face="Courier"
+          size="4">(2) Output file would be a tab-delimited text file with five columns:</font></font></p>
+    <p><font face="Times New Roman" size="3"><font face="Courier"
+          size="4">&nbsp; Column 1)&nbsp; Sample name<br>
+          &nbsp; Column 2)&nbsp; Recommended Haplogroup<br>
+          &nbsp; Column 3)&nbsp; Missing variants of recommended haplogroup<br>
+          &nbsp; Column 4)&nbsp; Private variants of recommended haplogroup<br>
+          &nbsp; Column 5)&nbsp; Variants of selected region&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</font></font></p>
+<p><a href="#contents"><font size="4">back to contents</font> </a></p>
+    <hr>
+    <h2 id="var">mitotoolpy-var.py</h2>
+    <h3>Description:</h3>
+    <p><font size="4">This script is used for classifying haplogroup according to input variants, listing potential missing variants
+        and private variants. Given candidate haplogroup(s) is/are provided by users, it could also detect missing variants of claimed haplogroup. 
+</font> </p>
+    <h3>Usage:</h3>
+    <p><font size="4"><font><font>The brief version of the following usage instructions can
+            be obtained by entering "</font><font face="Courier">python
+            mitotoolpy-var.py -h</font></font></font>" <font size="4">at
+</font></p>
+    <p><font face="Times New Roman" size="3"><font face="Courier"
+          size="4"> usage: python mitotoolpy-var.py -s [species] -r [region] -i [input] -o [output] </font></font></p>
+  <p><font face="Times New Roman" size="3"><font face="Courier"
+          size="4">where<br>
+        &nbsp; [species] = an animal selected from 'cattle', 'chicken', 'dog', 'horse', 'goat', 'pig', 'sheep' and 'yak'.<br>
+          &nbsp; [region] = a region selected from 'dloop', 'nondloop', 'whole' and '[begin_position]:[end_position]'; Default: 'whole'.<br>
+          &nbsp; [input] = input text file, see following notes for details.<br>
+&nbsp; [output] = output file or 'stdout'; Default: 'stdout' (i.e., the interface of command line prompt)</font></font>.</p>
+    <p><font face="Times New Roman" size="3"><font face="Courier"
+          size="4"> usage: python mitotoolpy-var.py -v , which displays current version number.</font></font></p>
+    <p><font face="Times New Roman" size="3"><font face="Courier"
+          size="4"> usage: python mitotoolpy-var.py -h , which displays help document.</font></font></p>
+    <h3>Notes: </h3>
+    <p><font face="Times New Roman" size="3"><font face="Courier"
+          size="4">(1) Input file should be a tab-delimited text file with two or three columns:</font></font></p>
+  <p><font face="Times New Roman" size="3"><font face="Courier"
+          size="4">&nbsp; Column 1)&nbsp; Sample name<br>
+			&nbsp; Column 2)&nbsp; Variants<br>
+          	&nbsp; Column 3 (optional))&nbsp; Candidate haplogroup(s) claimed by user. Multiple haplogroups seperated by comma, colon or semicolon could be given together.
+	</font></font></p>
+<p><font face="Times New Roman" size="3"><font face="Courier"
+          size="4">(2) Output file would be a tab-delimited text file with five columns:</font></font></p>
+    <p><font face="Times New Roman" size="3"><font face="Courier"
+          size="4">&nbsp; Column 1)&nbsp; Sample name<br>
+          &nbsp; Column 2)&nbsp; Recommended Haplogroup<br>
+          &nbsp; Column 3)&nbsp; Missing variants of recommended haplogroup<br>
+          &nbsp; Column 4)&nbsp; Private variants of recommended haplogroup<br>
+          &nbsp; Column 5)&nbsp; Missing variants of haplogroup(s) claimed by user. <br>
+          &nbsp; Column 6)&nbsp; Variants of selected region&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </font></font></p>
+<p><a href="#contents"><font size="4">back to contents</font> </a></p>
+    <hr>
+    <p> </p>
+    <h2 id="download">Download</h2>
+    <p> </p>
+    <p><font size="4">MitoToolPy is licensed under GPLv3. Its preinstallation includes Python and Biopython. Meanwhile, ClulstalW 2 will be downloaded together for pairwise alignment between referenece sequence and query sequence. Therefore, after the download, please make sure that ClustalW (in 'bin' directory) has right to execute on your system. Supposed your system is not mentioned below, please download one of below versions and replace original ClustalW (in 'bin' directory) with compiled ClustalW of your system.</font></p>
+    <table width="580" border="1">
+  <tr>
+    <td>Operation System</td>
+    <td>Version</td>
+  </tr>
+  <tr>
+    <td>Windows (XP/Vista/7/8)</td>
+    <td><a href="./mp/MitoToolPy_Win.zip" target="_blank">MitoToolPy_Win</a></td>
+  </tr>
+  <tr>
+    <td>Linux</td>
+    <td><a href="./mp/MitoToolPy_Linux.tar.gz" target="_blank">MitoToolPy_Linux</a></td>
+  </tr>
+  <tr>
+    <td>Mac</td>
+    <td><a href="./mp/MitoToolPy_Mac.zip" target="_blank">MitoToolPy_Mac</a></td>
+  </tr>
+</table>
+
+  <p><a href="#contents"><font size="4">back to contents</font> </a></p>
+  <br/>
+  <div id="clustrmaps-widget"></div><script type="text/javascript">var _clustrmaps = {'url' : 'http://mitotool.org/mp.html', 'user' : 1146024, 'server' : '3', 'id' : 'clustrmaps-widget', 'version' : 1, 'date' : '2014-06-12', 'lang' : 'en', 'corners' : 'square' };(function (){ var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'http://www3.clustrmaps.com/counter/map.js'; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);})();</script><noscript><a href="http://www3.clustrmaps.com/user/bca117ca8"><img src="http://www3.clustrmaps.com/stats/maps-no_clusters/mitotool.org-mp.html-thumb.jpg" alt="Locations of visitors to this page" /></a></noscript>
+  </body>
+</html>
