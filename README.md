@@ -5,7 +5,7 @@ Copyright © 2014 MitoTool & DomeTree Team
 Author: Long Fan (mitotool@gmail.com)
 
 ===================================
-##Brief introduction
+##Introduction
 
 MitoToolPy written in python and running on various operation systems (e.g. Windows, Linux, Mac), is designed for data analysis of mitochondrial DNA of eight domestic animals, including cattle, chicken, dog, horse, goat, pig, sheep and yak. It utilizes [dometree][1] as the reference, and its analysis for mtDNA sequences include (1) outputting variants scored relative to the reference sequences; (2) classifying haplogroup status (haplogrouping); and (3) checking potential errors. MitoToolPy can also handle partial mtDNA genome (e.g. control region) sequences and can serve as a convenient "barcoding tool" for strains or breeds of domestic animals.
 
