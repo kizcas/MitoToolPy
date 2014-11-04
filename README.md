@@ -35,8 +35,6 @@ MitoToolPy requires the preinstallation of Python and Biopython. Meanwhile, Clul
 
 This script is used for classifying haplogroup according to input sequence(s), outputting variants scored relative to the reference sequences, listing potential missing variants and private variants.
 
-The brief version of the following usage instructions can be obtained by entering `python mitotoolpy-seq.py -h` at
-
 Usage: `python mitotoolpy-seq.py -s [species] -r [region] -i [input] -o [output]`
 
 where
@@ -73,8 +71,6 @@ Notes:
 **(2) MitoToolPy-Var (i.e., mitotoolpy-var.py)**
 
 This script is used for classifying haplogroup according to input variants, listing potential missing variants and private variants. Given candidate haplogroup(s) is/are provided by users, it could also detect missing variants of claimed haplogroup.
-
-The brief version of the following usage instructions can be obtained by entering "python mitotoolpy-var.py -h" at
 
 Usage: `python mitotoolpy-var.py -s [species] -r [region] -i [input] -o [output]`
 
