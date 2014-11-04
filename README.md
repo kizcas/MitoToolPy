@@ -39,7 +39,7 @@ The brief version of the following usage instructions can be obtained by enterin
 
 Usage: `python mitotoolpy-seq.py -s [species] -r [region] -i [input] -o [output]`
 
-where<br />
+where
 
 **[species]** = an animal selected from 'cattle', 'chicken', 'dog', 'horse', 'goat', 'pig', 'sheep' and 'yak'.
 
@@ -79,6 +79,7 @@ The brief version of the following usage instructions can be obtained by enterin
 Usage: `python mitotoolpy-var.py -s [species] -r [region] -i [input] -o [output]`
 
 where
+
 **[species]** = an animal selected from 'cattle', 'chicken', 'dog', 'horse', 'goat', 'pig', 'sheep' and 'yak'.
 
 **[region]** = a region selected from 'dloop', 'nondloop', 'whole' and '[begin_position]:[end_position]'; Default: 'whole'.
