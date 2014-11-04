@@ -1,4 +1,4 @@
-MitoToolPy
+##MitoToolPy
 
 Copyright © 2014 MitoTool & DomeTree Team 
 
@@ -28,7 +28,7 @@ MitoToolPy requires the preinstallation of Python and Biopython. Meanwhile, Clul
 
 
 ===================================
-##Manual of MitoToolPy
+##Manual
 
 **(1) MitoToolPy-Seq (i.e., mitotoolpy-seq.py)**
 
