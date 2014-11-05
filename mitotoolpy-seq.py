@@ -4,9 +4,11 @@ from __future__ import print_function
 import getopt
 import sys
 import os
+import stat
 import re
 import time
 import platform
+import subprocess
 
 start_time = time.time()
 exeDir = os.path.abspath(os.path.dirname(__file__))+os.sep
@@ -14,8 +16,13 @@ exeDir = os.path.abspath(os.path.dirname(__file__))+os.sep
 from itertools import izip, count
 from Bio import SeqIO
 from Bio import AlignIO
-from Bio.Align.Applications import ClustalwCommandline
-from Bio.Align.Applications import ClustalOmegaCommandline
+
+if os.path.exists(exeDir+"/tmp"):
+	os.chmod(exeDir+"/tmp", stat.S_IRWXU+stat.S_IRWXG+stat.S_IRWXO)
+	pass
+else:
+	os.mkdir(exeDir+"/tmp")
+	os.chmod(exeDir+"/tmp", stat.S_IRWXU+stat.S_IRWXG+stat.S_IRWXO)
 
 def reorder(variantList):
 	tmp=dict()
@@ -23,7 +30,6 @@ def reorder(variantList):
 		m=re.search(r'^(\d+)',item)
 		if m:
 			location=int(m.group(1))
-			#print location
 			tmp.update({item:location})
 	tmp2=sorted(tmp.items(),key = lambda tmp:tmp[1])
 	variantListNew=[i[0] for i in tmp2]
@@ -111,13 +117,14 @@ def manualModifyVariant(species, variantList):
 	return variantList
 
 def runClustalwAndGetVariantSet(exeDir, species, clustalw):
-#begin to run clustalw
-	cline = ClustalwCommandline(cmd=exeDir+"/bin/"+clustalw, infile=exeDir+"/tmp/in"+species+".fasta", outfile=exeDir+"/tmp/out"+species+".fasta", quiet=True)
-	#cline = ClustalOmegaCommandline(cmd=exeDir+"/bin/"+clustalo, infile=exeDir+"/tmp/in"+species+".fasta", outfile=exeDir+"/tmp/out"+species+".fasta", verbose=True, auto=True, force=True)
-	stdout, stderr = cline()
-	#analyze the output of clustalw
-	align = AlignIO.read(exeDir+"/tmp/out"+species+".fasta", "clustal")
-	#align = AlignIO.read(exeDir+"/tmp/out"+species+".fasta", "fasta")
+	#begin to run clustalw
+	p=subprocess.Popen('"'+exeDir+"/bin/"+clustalw+'"'+" -INFILE="+'"'+exeDir+"/tmp/in"+species+".fasta"+'"'+" -OUTFILE="+'"'+exeDir+"/tmp/out"+species+".fasta"+'"'+" -QUIET", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT) 
+	p.wait()
+	#os.system(exeDir+"/bin/"+clustalw+" -INFILE="+exeDir+"/tmp/in"+species+".fasta"+" -OUTFILE="+exeDir+"/tmp/out"+species+".fasta"+" -QUIET")
+	#analyse the output of clustalw
+	tmpFile_handle=open(exeDir+"/tmp/out"+species+".fasta",'r')
+	align = AlignIO.read(tmpFile_handle, "clustal")
+	tmpFile_handle.close()
 	refPrewChar=''
 	queryPrewChar=''
 	#parameter for insertation in query
@@ -126,14 +133,13 @@ def runClustalwAndGetVariantSet(exeDir, species, clustalw):
 	insertString = []
 	insertList = []
 	totalInsertLong = 0
-	#parameter for Ns in query #//////
+	#parameter for Ns in query
 	beginNs = []
 	endNs = []
 	#parameter for deletion in query
 	beginDel = []
 	endDel = []
 	delString = []
-	#delList = []
 	#record variants
 	variantList = []
 
@@ -150,7 +156,7 @@ def runClustalwAndGetVariantSet(exeDir, species, clustalw):
 				insertString[-1] = insertString[-1] + queryChar
 		if refChar != '-' and refChar != queryChar:
 			# query has SNPs
-			if queryChar != '-' and queryChar != 'N': #///////
+			if queryChar != '-' and queryChar != 'N':
 				if refChar == 'A':
 					if queryChar == 'G':
 						variantList.append(str(num - totalInsertLong+1))
@@ -174,7 +180,7 @@ def runClustalwAndGetVariantSet(exeDir, species, clustalw):
 				else:
 					variantList.append(str(num - totalInsertLong+1)+queryChar)
 			# query has Ns
-			elif queryChar == 'N': #///////
+			elif queryChar == 'N':
 				if queryPrewChar != 'N':
 					beginNs.append(num - totalInsertLong + 1)
 					endNs.append(num - totalInsertLong + 1)
@@ -210,7 +216,6 @@ def runClustalwAndGetVariantSet(exeDir, species, clustalw):
 		else:
 			querySet.add(str(beginPosition)+'-'+str(endPosition)+'d')
 	querySet.update(variantList)
-	#print(",".join(list(querySet)))
 	return querySet
 
 def analyzeSeqInFile(species, inputFile, output, exeDir, region):
@@ -226,17 +231,7 @@ def analyzeSeqInFile(species, inputFile, output, exeDir, region):
 		clustalw="clustalw2_mac"
 	else:
 		pass
-	
-	#clustalo="/clustalo/clustalo.exe"
-	#if platform.system() == "Linux" and sys.maxsize > 2**32:
-	#	clustalo="clustalo_linux_64"
-	#elif platform.system() == "Linux" and sys.maxsize < 2**32:
-	#	clustalo="clustalo_linux_32"
-	#elif platform.system() == "Darwin":
-	#	clustalo="clustalo_mac"
-	#else:
-	#	pass
-	
+	os.chmod(exeDir+"/bin/"+clustalw, stat.S_IRWXU+stat.S_IRWXG+stat.S_IRWXO)
 	
 	regionSetDloop={"cattle":[363,15792],"chicken":[1,1232],"dog":[15461,16196],"horse":[15466,16657],"pig":[1,1254],"yak":[1,892],"sheep":[15437,16616],"goat":[15431,16642]} #the dloop of cattle is different from others
 	regionSetWhole={"cattle":[1,16338],"chicken":[1,16785],"dog":[1,16196],"horse":[1,16657],"pig":[1,16690],"yak":[1,16322],"sheep":[1,16616],"goat":[1,16642]}
@@ -290,7 +285,6 @@ def analyzeSeqInFile(species, inputFile, output, exeDir, region):
 		for line in treeFile:
 			refHaplogrupName, refHaplogrupVariants = line.rstrip('\n').split(':')
 			refVariantsSet=set(removeVariantForNonSelectedRegion(re.split(r',\s*',refHaplogrupVariants), regionBegin, regionEnd, species, region))
-			#print(refHaplogrupName+":"+",".join(removeVariantForNonSelectedRegion(re.split(r',\s*',refHaplogrupVariants), regionBegin, regionEnd)))
 			treeHaplogroupNameList.append(refHaplogrupName)
 			if len(refVariantsSet)!=0:
 				treeHaplogroupVariantsSetList.append(refVariantsSet)
@@ -332,7 +326,7 @@ def analyzeSeqInFile(species, inputFile, output, exeDir, region):
 	for query in queryRecord:
 		queryNumber=queryNumber+1
 		output_handle = open(exeDir+"/tmp/in"+species+".fasta", "w")
-		SeqIO.write(refRecord, output_handle, "fasta")
+		print(">refSeq_"+species+"\n"+refRecord.seq,end="\n", file=output_handle)
 		
 	#begin the modification of the order of query sequence
 		#pig goat yak only
@@ -351,9 +345,6 @@ def analyzeSeqInFile(species, inputFile, output, exeDir, region):
 				p1=query.seq[(tmpos+len(cutSeq)):]
 				p2=query.seq[:(tmpos+len(cutSeq))]
 				query.seq=p1+p2
-				#print(p2)
-				#print(p1)
-				#print(query.seq)
 		elif cutRequireTwo and region == "dloop":
 			tmpos=query.seq.find(cutSeq)
 			if tmpos>0:
@@ -368,25 +359,24 @@ def analyzeSeqInFile(species, inputFile, output, exeDir, region):
 		if cutRequireTwo and region == "dloop":
 			#cattle dloop part1
 			query.seq=R1
-			SeqIO.write(query, output_handle, "fasta")
+			print(">querySeq_"+species+"\n"+query.seq, end="\n", file=output_handle)
 			output_handle.close()
 			querySet1=runClustalwAndGetVariantSet(exeDir, species, clustalw)
 			#cattle dloop part2
 			output_handle = open(exeDir+"/tmp/in"+species+".fasta", "w")
-			SeqIO.write(refRecord, output_handle, "fasta")
+			print(">refSeq_"+species+"\n"+refRecord.seq, end="\n", file=output_handle)
 			query.seq=R2
-			SeqIO.write(query, output_handle, "fasta")
+			print(">querySeq_"+species+"\n"+query.seq, end="\n", file=output_handle)
 			output_handle.close()
 			querySet2=runClustalwAndGetVariantSet(exeDir, species, clustalw)
 			querySet.update(querySet1)
 			querySet.update(querySet2)
 		else:
-			SeqIO.write(query, output_handle, "fasta")
+			print(">querySeq_"+species+"\n"+query.seq, end="\n", file=output_handle)
 			output_handle.close()
 			querySet=runClustalwAndGetVariantSet(exeDir, species, clustalw)
 
 		# preprocessing querySet for pig and dog currently
-		#querySetTmp=set(removeVariantForNonSelectedRegion(removeVariantForSomeRegion(species,list(querySet)), regionBegin, regionEnd, species, region))
 		querySetTmp=set(removeVariantForNonSelectedRegion(removeVariantForSomeRegion(species,manualModifyVariant(species, list(querySet))), regionBegin, regionEnd, species, region))
 		querySet={}
 		querySet=querySetTmp.copy()
@@ -406,11 +396,7 @@ def analyzeSeqInFile(species, inputFile, output, exeDir, region):
 				resultList = []
 				resultList.append(haplogroupName)
 				privateTmp = list(querySet - refSet)
-				#privateTmp = list(querySet.difference(refSet))
-				#privateTmp = [v for v in querySet if v not in refSet]
-				#privateTmp.sort(reverse=True)
 				missingTmp = list(refSet - querySet)
-				#missingTmp.sort(reverse=True)
 				if len(missingTmp) != 0:
 					missing[haplogroupName] = missingTmp
 				if len(privateTmp) != 0:
@@ -418,11 +404,7 @@ def analyzeSeqInFile(species, inputFile, output, exeDir, region):
 			elif score == scoreMax:
 				resultList.append(haplogroupName)
 				privateTmp = list(querySet - refSet)
-				#privateTmp = list(querySet.difference(refSet))
-				#privateTmp = [v for v in querySet if v not in refSet]
-				#privateTmp.sort(reverse=True)
 				missingTmp = list(refSet - querySet)
-				#missingTmp.sort(reverse=True)
 				if len(missingTmp) != 0:
 					missing[haplogroupName] = missingTmp
 				if len(privateTmp) != 0:
@@ -554,3 +536,4 @@ print("========= Program running =========")
 
 # python C:\Users\user\Desktop\dometree-tool\mitotoolpy.py -s dog -i C:\Users\user\Desktop\dometree-tool\test\dog.fasta -o C:\Users\user\Desktop\dometree-tool\test\dog_test.txt -r "1:100"
 analyzeSeqInFile(species, inputFile, output, exeDir, region)
+
