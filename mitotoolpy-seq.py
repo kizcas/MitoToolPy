@@ -13,7 +13,7 @@ import subprocess
 start_time = time.time()
 exeDir = os.path.abspath(os.path.dirname(__file__))+os.sep
 
-from itertools import izip, count
+from itertools import count
 from Bio import SeqIO
 from Bio import AlignIO
 
@@ -143,7 +143,7 @@ def runClustalwAndGetVariantSet(exeDir, species, clustalw):
 	#record variants
 	variantList = []
 
-	for num, refChar, queryChar in izip(count(),align[0].seq, align[1].seq):
+	for num, refChar, queryChar in zip(count(),align[0].seq, align[1].seq):
 		# query has inserts
 		if refChar == '-':
 			totalInsertLong = totalInsertLong + 1
@@ -201,16 +201,16 @@ def runClustalwAndGetVariantSet(exeDir, species, clustalw):
 	# the variants including SNPs, Ns and indels would be stored in querySet 
 	querySet = set()
 	# for insertion
-	for beginPosition, string, endPosition in izip(beginInsert,insertString,endInsert):       
+	for beginPosition, string, endPosition in zip(beginInsert,insertString,endInsert):       
 		querySet.add(str(beginPosition)+'+'+string)
 	# for Ns
-	for beginPosition, endPosition in izip(beginNs,endNs):
+	for beginPosition, endPosition in zip(beginNs,endNs):
 		if beginPosition == endPosition:
 			querySet.add(str(beginPosition)+'N')
 		else:
 			querySet.add(str(beginPosition)+'-'+str(endPosition)+'N')
 	# for deletion
-	for beginPosition, string, endPosition in izip(beginDel,delString,endDel):
+	for beginPosition, string, endPosition in zip(beginDel,delString,endDel):
 		if beginPosition == endPosition:
 			querySet.add(str(beginPosition)+'d')
 		else:
@@ -506,14 +506,14 @@ for name, value in options:
 		elif os.path.isdir(value):
 			print("Output file should be a file but not a directory, please check again.")
 			sys.exit()
-		elif os.path.exists(value) and os.path.isfile(value):
-			checking=raw_input("Output file already exists, whether to overwrite it? (y/n)")
-			checking=checking.lower()
-			print()
-			if checking in ("y","yes"):
-				output=value
-			else:
-				sys.exit()
+		# elif os.path.exists(value) and os.path.isfile(value):
+		# 	checking=raw_input("Output file already exists, whether to overwrite it? (y/n)")
+		# 	checking=checking.lower()
+		# 	print()
+		# 	if checking in ("y","yes"):
+		# 		output=value
+		# 	else:
+		# 		sys.exit()
 		else:
 			pass
 	else:
